@@ -6,26 +6,23 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,ttf,wav,mp3,db
 version = 0.1
 
-# রিকোয়ারমেন্টস একদম সিম্পল রাখা হয়েছে
+# রিকোয়ারমেন্টস (kivymd এর ভার্সন ফিক্স করা হয়েছে)
 requirements = python3,kivy==2.3.0,kivymd==1.2.0,pillow,android,pyjnius
 
 orientation = portrait
 fullscreen = 0
 
-# পারমিশন
-android.permissions = INTERNET, BLUETOOTH, BLUETOOTH_ADMIN, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, CHANGE_WIFI_STATE, ACCESS_WIFI_STATE
-
+# অ্যান্ড্রয়েড সেটিংস (এখানেই আমরা বাগটি ফিক্স করছি)
 android.api = 33
-android.minapi = 21
-# NDK ভার্সন পরিবর্তন করে ২৩বি করা হয়েছে যা সবচেয়ে স্টেবল
-android.ndk = 23b
-android.ndk_api = 21
+android.minapi = 24
+android.ndk = 25b
+android.ndk_api = 24
 android.accept_sdk_license = True
+android.enable_androidx = True
 
 icon.filename = %(source.dir)s/icon.png
 presplash.filename = %(source.dir)s/splash.png
 
-# শুধু একটি আর্কিটেকচার (বিল্ড দ্রুত হবে)
 android.archs = arm64-v8a
 
 [buildozer]
