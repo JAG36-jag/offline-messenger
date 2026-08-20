@@ -30,16 +30,17 @@ jobs:
       - name: Install Buildozer and Cython
         run: |
           pip install --upgrade pip
-          pip install "Cython<3.0" buildozer 
+          pip install "Cython<0.30" buildozer
 
-      - name: Build APK with Buildozer
+      - name: Build APK
         run: |
-          # শুধু এই নিচের কমান্ডটি রান হবে, ক্লিন করার দরকার নেই
+          # কোনো এরর হলে যেন পরের স্টেপ না থামে এবং ক্লিন বিল্ড হয়
+          rm -rf .buildozer
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
 
-      - name: Upload APK Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: messenger-apk
