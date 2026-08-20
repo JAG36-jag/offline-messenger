@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install System Dependencies
+      - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev \
@@ -32,9 +32,7 @@ jobs:
 
       - name: Build APK
         run: |
-          # একদম ফ্রেশ স্টার্ট
-          rm -rf .buildozer
-          buildozer android clean
+          # এখান থেকে 'clean' কমান্ড সরিয়ে দেওয়া হয়েছে যাতে এরর না আসে
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
