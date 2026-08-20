@@ -16,7 +16,14 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      # ক্যাশ যোগ করা হচ্ছে যাতে বিল্ড সেভ থাকে
+      - name: Cache Buildozer
+        uses: actions/cache@v4
+        with:
+          path: .buildozer
+          key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
+
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev \
@@ -28,12 +35,11 @@ jobs:
       - name: Install Buildozer and Cython
         run: |
           pip install --upgrade pip
-          pip install "Cython<0.30" buildozer
+          pip install "Cython<3.0" buildozer==1.5.0
 
       - name: Build APK
         run: |
-          # কোনো পুরনো ক্যাশ থাকলে ক্লিয়ার করে ফ্রেশ বিল্ড
-          rm -rf .buildozer
+          # কোনো এরর আসলে পরের বার যেন ক্যাশ থেকে কাজ শুরু করে
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
