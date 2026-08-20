@@ -34,8 +34,7 @@ jobs:
 
       - name: Build APK with Buildozer
         run: |
-          # বিল্ড করার আগে পুরনো ক্যাশ পরিষ্কার করা
-          buildozer android clean
+          # শুধু এই নিচের কমান্ডটি রান হবে, ক্লিন করার দরকার নেই
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
@@ -43,5 +42,5 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: offline-messenger-apk
+          name: messenger-apk
           path: bin/*.apk
