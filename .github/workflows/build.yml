@@ -16,14 +16,7 @@ jobs:
         with:
           python-version: '3.10'
 
-      # ক্যাশ যোগ করা হচ্ছে যাতে বিল্ড সেভ থাকে
-      - name: Cache Buildozer
-        uses: actions/cache@v4
-        with:
-          path: .buildozer
-          key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
-
-      - name: Install System Dependencies
+      - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev \
@@ -39,7 +32,8 @@ jobs:
 
       - name: Build APK
         run: |
-          # কোনো এরর আসলে পরের বার যেন ক্যাশ থেকে কাজ শুরু করে
+          # একদম ফ্রেশ স্টার্ট (পুরনো জঞ্জাল মুছে ফেলা)
+          rm -rf .buildozer
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
@@ -47,5 +41,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: messenger-apk
+          name: offline-messenger-apk
           path: bin/*.apk
