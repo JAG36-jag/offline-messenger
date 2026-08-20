@@ -20,37 +20,22 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            build-essential \
-            git \
-            python3-dev \
-            libsdl2-dev \
-            libsdl2-image-dev \
-            libsdl2-mixer-dev \
-            libsdl2-ttf-dev \
-            libportmidi-dev \
-            libswscale-dev \
-            libavformat-dev \
-            libavcodec-dev \
-            zlib1g-dev \
-            libsqlite3-dev \
-            sqlite3 \
-            libssl-dev \
-            libffi-dev \
-            libtinfo5 \
-            libunwind-dev \
-            autoconf \
-            libtool \
-            pkg-config \
-            cmake \
+            build-essential git python3-dev ffmpeg libsdl2-dev \
+            libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+            libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev \
+            zlib1g-dev libsqlite3-dev sqlite3 libssl-dev libffi-dev \
+            libtinfo5 libunwind-dev autoconf libtool pkg-config cmake \
             openjdk-17-jdk
 
       - name: Install Buildozer and Cython
         run: |
           pip install --upgrade pip
-          pip install Cython==0.29.33 buildozer
+          pip install "Cython<3.0" buildozer 
 
       - name: Build APK with Buildozer
         run: |
+          # বিল্ড করার আগে পুরনো ক্যাশ পরিষ্কার করা
+          buildozer android clean
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
@@ -58,5 +43,5 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: messenger-apk
+          name: offline-messenger-apk
           path: bin/*.apk
