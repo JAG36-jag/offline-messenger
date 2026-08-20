@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev \
@@ -28,11 +28,12 @@ jobs:
       - name: Install Buildozer and Cython
         run: |
           pip install --upgrade pip
-          pip install "Cython<0.30" buildozer
+          pip install "Cython<0.30" buildozer==1.5.0
 
       - name: Build APK
         run: |
-          # এখান থেকে 'clean' কমান্ড সরিয়ে দেওয়া হয়েছে যাতে এরর না আসে
+          # কোনো পুরনো জঞ্জাল থাকলে সব সাফ করে বিল্ড শুরু হবে
+          rm -rf .buildozer
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
