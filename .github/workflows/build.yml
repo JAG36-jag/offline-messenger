@@ -16,20 +16,25 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install Dependencies
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libsqlite3-dev sqlite3 libssl-dev libffi-dev libtinfo5 libunwind-dev autoconf libtool pkg-config cmake openjdk-17-jdk
+          sudo apt-get install -y build-essential git python3-dev ffmpeg libsdl2-dev \
+          libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev \
+          libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev libsqlite3-dev \
+          sqlite3 libssl-dev libffi-dev libtinfo5 libunwind-dev autoconf libtool \
+          pkg-config cmake openjdk-17-jdk
 
       - name: Install Buildozer and Cython
         run: |
           pip install --upgrade pip
-          pip install "Cython<0.30" buildozer==1.5.0
+          pip install "Cython<0.30" buildozer
 
       - name: Build APK
         run: |
-          # বিল্ডোজারের ক্যাশ এবং পুরনো SDK ক্লিয়ার করা
+          # একদম ফ্রেশ স্টার্ট
           rm -rf .buildozer
+          buildozer android clean
           yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
