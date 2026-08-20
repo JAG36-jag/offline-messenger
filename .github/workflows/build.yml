@@ -23,7 +23,6 @@ jobs:
             build-essential \
             git \
             python3-dev \
-            ffmpeg \
             libsdl2-dev \
             libsdl2-image-dev \
             libsdl2-mixer-dev \
@@ -33,24 +32,12 @@ jobs:
             libavformat-dev \
             libavcodec-dev \
             zlib1g-dev \
-            libgstreamer1.0-dev \
-            gstreamer1.0-plugins-base \
-            gstreamer1.0-plugins-good \
             libsqlite3-dev \
             sqlite3 \
-            bzip2 \
-            libbz2-dev \
             libssl-dev \
-            openssl \
-            libgdbm-dev \
-            libgdbm-compat-dev \
-            liblzma-dev \
-            libreadline-dev \
-            libncursesw5-dev \
             libffi-dev \
-            uuid-dev \
-            libdb5.3-dev \
             libtinfo5 \
+            libunwind-dev \
             autoconf \
             libtool \
             pkg-config \
@@ -63,7 +50,8 @@ jobs:
           pip install Cython==0.29.33 buildozer
 
       - name: Build APK with Buildozer
-        run: yes | buildozer -v android debug
+        run: |
+          yes | buildozer -v android debug
         env:
           ACCEPT_SDK_LICENSE: "True"
 
